@@ -1,0 +1,6 @@
+---
+-  hosts: 159.223.184.120
+   become: yes
+   roles:
+   - apache2
+

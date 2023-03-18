@@ -1,0 +1,5 @@
+---
+# vars file for apache2
+    src_path: /home/edureka
+    dst_path: /var/www/html
+

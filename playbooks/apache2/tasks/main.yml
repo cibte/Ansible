@@ -1,0 +1,29 @@
+---
+# tasks file for apache2
+  - name: Install packages
+    package: name={{ item }} update_cache=yes state=latest
+    loop: ['apache2', 'vim', 'screen']
+    tags: ['setup']
+
+  - name: Copy Index Page
+    copy:
+       src: "{{src_path}}/index.html"
+       dest: "{{dst_path}}/index.html"
+       owner: root
+       group: root
+       mode: '0644'
+    tags: ['update', 'sync']
+
+  - name: start the services
+    service: name=apache2 state=started enabled=yes
+    tags: ['service']
+
+  - name: Changing port number
+    lineinfile:
+       path: /etc/apache2/ports.conf
+       regexp: '^Listen'
+       insertafter: '^#Listen'
+       line: Listen 83
+    notify: Restart apache2
+    tags: ['update', 'sync']
+
